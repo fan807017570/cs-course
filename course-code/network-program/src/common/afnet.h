@@ -11,7 +11,13 @@
 #define __AFNET_H_
 #include<sys/types.h>
 
-int af_create_socket(int domain);
+int af_create_socket(int domain,const char* port);
+
+int af_nonblock(int fd);
+
+int af_connect(const char* addr,const char* port ,int block_flag);
+
+int af_create_tcpcli(const char* addr,cont char* port,int block_flag);
 
 int af_sendtimout(int fd,long ms);
 
@@ -19,7 +25,12 @@ int af_create_tcpserver(const char* port,int backlog,char* bindaddr);
 
 int af_reuseaddr(int fd);
 
-int af_listen(int fd,backlog);
+int af_listen(int fd,int backlog);
 
+int readn(int fd,char* buf,long len);
+
+int read_msg(int fd,char* buf,long len);
+
+int read_line(int fd,char* buf,long len);
 #endif
 

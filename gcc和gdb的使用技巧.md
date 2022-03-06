@@ -96,6 +96,14 @@
    - 具有较小的应用程序体积
    - 实现进程之间的资源共享
 
+   ###### 多个文件编译
+
+   ```shell
+   gcc -o buffer_test buffer_test.c buffer.c   
+   ```
+
+   
+
 #### GDB调试器
 
 ##### 调试信息
