@@ -344,4 +344,16 @@
 
     
 
-13. 发达
+15. 操作系统缓冲区
+
+    ```shell
+    # 查看接受缓冲区
+    cat /proc/sys/net/ipv4/tcp_rmem
+    # 查看发送缓冲区
+    cat /proc/sys/net/ipv4/tcp_rmem
+    ```
+
+    
+
+    
+
