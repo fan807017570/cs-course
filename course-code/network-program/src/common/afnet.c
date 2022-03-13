@@ -54,25 +54,39 @@ int af_nonblock(int fd){
 
 }
 
-int main(int argc,char** argv){
-    struct addrinfo hints,rp,result;
-    hints.ai_family = AF_UNSPEC;
-    hints.ai_socktype = SOCK_STREAM;
-    hints.ai_flags = AI_PASSIVE;
-    hints.ai_protocol =0 ;
-    hints.ai_next =NULL;
-    hints.ai_addr=NULL;
-    int s ; 
-    s = getaddrinfo(NULL,argv[1],&hints,&result);
-    if(s<0){
-        printf("getaddrinfo error:%s\n",strerror(errno));
-        exit(0);
+int tcp_server_listen(const char *port){
+    int srv_fd;
+    struct addrinfo hints;
+    struct addrinfo *results,*rp;
+
+    if(getaddrinfo(NULL,port,&hints,&results)!=0){
+        printf("get addrinfo error:%s \n",sterror(errno));
+        exit(-1);
     }
-    for(rp = result;rp!=NULL;rp=rp->next){
-        int fd =socket(rp->ai_family,rp->socktype,rp->protocol) ;
-        if(fd==-1){
-            continue;
-        }
-        
+
+    for(rp = results;rp!=NULL;rp= rp=rp->ai-next){
+         
     }
 }
+//int main(int argc,char** argv){
+//    struct addrinfo hints,rp,result;
+//    hints.ai_family = AF_UNSPEC;
+//    hints.ai_socktype = SOCK_STREAM;
+//    hints.ai_flags = AI_PASSIVE;
+//    hints.ai_protocol =0 ;
+//    hints.ai_next =NULL;
+//    hints.ai_addr=NULL;
+//    int s ; 
+//    s = getaddrinfo(NULL,argv[1],&hints,&result);
+//    if(s<0){
+//        printf("getaddrinfo error:%s\n",strerror(errno));
+//        exit(0);
+//    }
+//    for(rp = result;rp!=NULL;rp=rp->next){
+//        int fd =socket(rp->ai_family,rp->socktype,rp->protocol) ;
+//        if(fd==-1){
+//            continue;
+//        }
+//        
+//    }
+//}
