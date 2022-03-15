@@ -12,6 +12,8 @@
 #include<sys/socket.h>
 #include<string.h>
 #include"./afnet.h"
+#include<netdb.h>
+#include<errno.h>
 
 
 
@@ -58,15 +60,44 @@ int tcp_server_listen(const char *port){
     int srv_fd;
     struct addrinfo hints;
     struct addrinfo *results,*rp;
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_protocol=0;
+    hints.ai_addr= NULL;
+    hints.ai_next = NULL;
+    hints.ai_flags = AI_PASSIVE;
 
     if(getaddrinfo(NULL,port,&hints,&results)!=0){
-        printf("get addrinfo error:%s \n",sterror(errno));
+        printf("get addrinfo error:%s \n",strerror(errno));
         exit(-1);
     }
 
-    for(rp = results;rp!=NULL;rp= rp=rp->ai-next){
-         
+    for(rp = results;rp!=NULL;rp= rp=rp->ai_next){
+        srv_fd = socket(rp->ai_family,rp->ai_socktype,rp->ai_protocol); 
+        if(srv_fd<0){
+            printf("get socket error:%s\n",strerror(errno));
+            continue;
+        }
+        int on =1;
+        int sret=setsockopt(srv_fd,SOL_SOCKET,SO_REUSEADDR,&on,rp->ai_addrlen);
+        if(sret<0){
+            printf("set socket option error :%s\n",strerror(errno));
+            close(srv_fd);
+            continue;
+        }
+        if(bind(srv_fd,rp->ai_addr,rp->ai_addrlen)==0){
+            break;
+        }
+        close(srv_fd);
+
     }
+    printf("the initialized socket is :%d\n",srv_fd);
+    int ret =listen(srv_fd,100);
+    if(ret<0){
+        printf("listen socket error:%s\n",strerror(errno));
+        exit(-1);
+    }
+    return srv_fd;
 }
 //int main(int argc,char** argv){
 //    struct addrinfo hints,rp,result;
