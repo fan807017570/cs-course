@@ -32,5 +32,7 @@ int readn(int fd,char* buf,long len);
 int read_msg(int fd,char* buf,long len);
 
 int read_line(int fd,char* buf,long len);
+
+int tcp_server_listen(int port);
 #endif
 
