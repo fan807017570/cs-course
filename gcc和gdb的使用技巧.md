@@ -110,3 +110,62 @@
 
 ##### 启动GDB
 
+##### GDB多进程调试
+
+##### G
+
+##### DB多线程调试
+
+```shell
+cc thread_server.c ../common/afnet.c  -o thread_server -lpthread -g  #gcc 编译多线程程序
+```
+
+```shell
+Breakpoint 2, main (argc=2, argv=0x7fffffffe1e8) at thread_server.c:61
+61	        int fd = accept(srv_fd,(struct sockaddr*)&cli_addr,&len);
+(gdb) n
+62	        if(fd<0){
+(gdb) n
+67	        int ret =pthread_create(&thd,NULL,run_thread,(void*)fd);
+(gdb) n
+[New Thread 0x7ffff7d9a700 (LWP 39334)]
+[Switching to Thread 0x7ffff7d9a700 (LWP 39334)]
+
+Thread 2 "thread_server" hit Breakpoint 1, run_thread (arg=0x4) at thread_server.c:23
+23	    pthread_detach(pthread_self());// 一个分离的线程，其他的线程，不能对其销毁或者停止操作。
+(gdb) info threads
+  Id   Target Id                                         Frame
+  1    Thread 0x7ffff7d9b740 (LWP 39321) "thread_server" 0x00005555555555d0 in main (argc=2, argv=0x7fffffffe1e8) at thread_server.c:67
+* 2    Thread 0x7ffff7d9a700 (LWP 39334) "thread_server" run_thread (arg=0x4) at thread_server.c:23
+(gdb) thread 2
+[Switching to thread 2 (Thread 0x7ffff7d9a700 (LWP 39334))]
+#0  run_thread (arg=0x4) at thread_server.c:23
+23	    pthread_detach(pthread_self());// 一个分离的线程，其他的线程，不能对其销毁或者停止操作。
+(gdb) n
+[Switching to Thread 0x7ffff7d9b740 (LWP 39321)]
+
+Thread 1 "thread_server" hit Breakpoint 2, main (argc=2, argv=0x7fffffffe1e8) at thread_server.c:61
+61	        int fd = accept(srv_fd,(struct sockaddr*)&cli_addr,&len);
+(gdb) info threads
+  Id   Target Id                                         Frame
+* 1    Thread 0x7ffff7d9b740 (LWP 39321) "thread_server" main (argc=2, argv=0x7fffffffe1e8) at thread_server.c:61
+  2    Thread 0x7ffff7d9a700 (LWP 39334) "thread_server" 0x000055555555537e in run_thread (arg=0x4) at thread_server.c:23
+(gdb) thread 2
+[Switching to thread 2 (Thread 0x7ffff7d9a700 (LWP 39334))]
+#0  0x000055555555537e in run_thread (arg=0x4) at thread_server.c:23
+23	    pthread_detach(pthread_self());// 一个分离的线程，其他的线程，不能对其销毁或者停止操作。
+(gdb) n
+24	    printf("the thread`s thread id is :%d\n",pthread_self());
+(gdb) n
+the thread`s thread id is :-136730880
+25	    int fd = (int)arg;
+(gdb) n
+26	    loop_echo(fd);
+(gdb) p fd
+$1 = 4
+(gdb) n
+receive content is :helelldsafad
+```
+
+
+

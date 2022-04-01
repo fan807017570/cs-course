@@ -87,5 +87,31 @@ int fcntl(int fd, int cmd, ... /* arg */ );
 
      一般通过注册一个信号处理函数，在子进程推出以后，再调用wait() 或者waitpid()。
 
-4. 
+4. #### 多线程
+
+  1. 线程创建
+
+    ```
+    ```
+
+    
+
+  2. 同步锁
+
+  ```c
+  #include <pthread.h>
+  int pthread_mutex_init(pthread_mutex_t *restrict mutex,const pthread_mutexattr_t *restrict attr); 
   
+  int pthread_mutex_destroy(pthread_mutex_t *mutex);
+       //Both return: 0 if OK, error number on failure
+  
+  #include <pthread.h>
+  int pthread_mutex_lock(pthread_mutex_t *mutex); 
+  int pthread_mutex_trylock(pthread_mutex_t *mutex); 
+  int pthread_mutex_unlock(pthread_mutex_t *mutex);
+  //All return: 0 if OK, error number on failure
+  ```
+
+  
+
+5. 
