@@ -17,7 +17,7 @@ int af_nonblock(int fd);
 
 int af_connect(const char* addr,const char* port ,int block_flag);
 
-int af_create_tcpcli(const char* addr,cont char* port,int block_flag);
+int af_create_tcpcli(const char* addr,const char* port,int block_flag);
 
 int af_sendtimout(int fd,long ms);
 
@@ -33,6 +33,6 @@ int read_msg(int fd,char* buf,long len);
 
 int read_line(int fd,char* buf,long len);
 
-int tcp_server_listen(int port);
+int tcp_server_listen(const char *port);
 #endif
 
