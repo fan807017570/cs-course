@@ -53,7 +53,14 @@ int af_listen(int fd,int backlog){
 }
 
 int af_nonblock(int fd){
-
+    int flag ;
+    flag = fcntl(fd,F_GETFL);
+    int ret = fcntl(fd,F_SETFL,flag|O_NONBLOCK);
+    if(ret<0){
+        log("Set socket nonblock by fcntl error:%s",strerror(errno));
+        return -1;
+    }
+    return 1;
 }
 
 int tcp_server_listen(const char *port){

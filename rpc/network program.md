@@ -441,6 +441,29 @@
 
     5. 发达
 
-16. 发达
+16. epoll 相关
 
+    1. epoll的相关的数据接口
+    
+       - epoll_event
+    
+         ```c
+         typedef union epoll_data {
+                        void        *ptr;
+                        int          fd;
+                        uint32_t     u32;
+                        uint64_t     u64;
+                    } epoll_data_t;
+         
+                    struct epoll_event {
+                        uint32_t     events;      /* Epoll events */
+                        epoll_data_t data;        /* User data variable */
+                    };
+         
+         ```
+    
+          
+    
+       - epoll_wait c
+    
     

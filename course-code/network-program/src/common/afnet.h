@@ -10,6 +10,9 @@
 #ifndef __AFNET_H_
 #define __AFNET_H_
 #include<sys/types.h>
+#include<fcntl.h>
+#include<unistd.h>
+#include "./common.h"
 
 int af_create_socket(int domain,const char* port);
 

@@ -145,8 +145,42 @@ ma表示标记该行为a；包括第几列的信息，都在标记a里。
 `a表示跳转到标记a处；会跳转到标记a的行，包括第几列
 I是定位到行首，A是定位到行末
 ```
+##### vim代码折叠功能
+```
+set foldenable                                        "启用折叠
+set foldmethod=manual                                 "indent 折叠方式
+set foldmethod=indent                                 "indent 折叠方式
+set foldmethod=marker                                "marker 折叠方式
+zf% {},[]  为标志，折叠代码
+zfi {  大括号折叠代码
+10.12 zf ,将10,12行折叠起来 
+zo 将折叠的代码打开
+zr ,zm 用于打开和关闭嵌套的折叠的代码
+zn ,zN 禁用折叠和恢复折叠
+```
 
 
+#### vim 删除操作
+```
+：9，15 copy 16  或 ：9，15 co 16
+由此可有：
+：9，15 move 16  或 :9,15 m 16 将第9行到第15行的文本内容到第16行的后面
 
+方法2：
+光标移动到结束行，ma
+光标移动到起始行,输入y'a
+光标移动到需要复制的行，输入p,行前复制则输入大写P
+```
 
+### vim Search and Replace
+
+- S: stands for substitute
+- search_term: the word you want to search and replace
+- replace_term: the word with which you want to replace it with
+- Option: c (for confirmation), g (replace all occurrence in one line), i (for ignoring the case)
+
+```
+:%s/<search_term>/<replace_term>/g
+
+```
 
